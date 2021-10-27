@@ -1,0 +1,8 @@
+docker run \
+  --add-host ralph.info:172.29.0.2 \
+  --net kind \
+  --rm \
+  curlimages/curl:7.71.0 ralph.info
+
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -out ralph-tls.crt -keyout ralph-tls.key -subj "//CN=ralph.info/CN=ralph.info"
+kubectl create secret tls ralph-tls --namespace default --key ralph-tls.key --cert ralph-tls.crt
